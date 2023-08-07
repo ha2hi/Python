@@ -1,9 +1,10 @@
 # https://school.programmers.co.kr/learn/courses/30/lessons/86491
 def solution(sizes):
-    left = []
-    right = []
-    for i in range(len(sizes)):
-        sizes[i].sort()
-        left.append(sizes[i][0])
-        right.append(sizes[i][1])
-    return max(left) * max(right)
+    cal_x = []
+    cal_y = []
+    for size in sizes:
+        size.sort()
+        cal_x.append(size[0])
+        cal_y.append(size[1])
+
+    return max(cal_x) * max(cal_y)

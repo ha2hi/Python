@@ -1,17 +1,9 @@
 # https://school.programmers.co.kr/learn/courses/30/lessons/77884
 def solution(left, right):
-    result = 0
-    
-    for  i in range(left, right + 1):
-        count  = 0
-        for j in range(1, i+1):
-            if i % j == 0:
-                
-                count += 1
-                
-        if count % 2  == 0:
-            result += i
+    res = 0 
+    for x in range(left, right+1):
+        if int(x**0.5) == x **0.5:
+            res -= x
         else:
-            result -= i
-    
-    return result
+            res += x
+    return res

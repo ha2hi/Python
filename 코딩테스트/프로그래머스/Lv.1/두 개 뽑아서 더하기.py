@@ -1,8 +1,8 @@
 # https://school.programmers.co.kr/learn/courses/30/lessons/68644
+from itertools import permutations
 def solution(numbers):
-    result = [] 
-    for i in range(len(numbers)):
-        for j in range(i+1,len(numbers)):
-            if numbers[i] + numbers[j] not in result:
-                result.append(numbers[i]+numbers[j])
-    return sorted(result)
+    res = set()
+    for x, y in permutations(numbers, 2):
+        res.add(x+y)
+    res = sorted(list(res))
+    return res

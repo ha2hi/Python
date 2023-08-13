@@ -1,9 +1,9 @@
 # https://school.programmers.co.kr/learn/courses/30/lessons/76501
 def solution(absolutes, signs):
-    answer = 0
-    for absolute,sign in zip(absolutes, signs):
-        if sign == True:
-            answer += absolute
+    res = 0
+    for x, y in zip(absolutes, signs):
+        if y is True:
+            res += x
         else:
-            answer -= absolute
-    return answer
+            res -= x
+    return res

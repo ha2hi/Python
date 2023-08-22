@@ -1,18 +1,16 @@
 # https://school.programmers.co.kr/learn/courses/30/lessons/64061
-def solution(boards, moves):
-    moves = map(lambda x : x-1, moves)
-    k = [0]
-    cnt = 0
-    for i in moves:
-        for board in boards:
-            if board[i] != 0:
-                k.append(board[i])
-                board[i] = 0
-                
-                if k[-1] == k[-2]:
-                    k.pop()
-                    k.pop()
-                    cnt += 2
+def solution(board, moves):
+    board_len = len(board)
+    tmp = []
+    res = 0
+    for move in moves:
+        for i in range(board_len):
+            if board[i][move-1] != 0:
+                tmp.append(board[i][move-1])
+                board[i][move-1] = 0
                 break
-    
-    return cnt
+        if len(tmp) >= 2 and tmp[-1] == tmp[-2]:
+            res += 2
+            tmp.pop()
+            tmp.pop()
+    return res

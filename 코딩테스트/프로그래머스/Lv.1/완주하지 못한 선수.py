@@ -1,13 +1,4 @@
 # https://school.programmers.co.kr/learn/courses/30/lessons/42576
+from collections import Counter
 def solution(participant, completion):
-    a = {}
-    b = 0
-    for data in participant:
-        a[hash(data)] = data
-        b += hash(data)
-     
-    for data in completion:
-        b -= hash(data)
-    
-    answer = a[b] 
-    return answer
+    return list(Counter(participant) - Counter(completion))[0]

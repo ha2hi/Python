@@ -1,8 +1,9 @@
 #https://school.programmers.co.kr/learn/courses/30/lessons/42748
 def solution(array, commands):
-    result = []
-    for s in range(len(commands)):
-        i, j, k = commands[s]
-        a = sorted(array[i-1:j])
-        result.append(a[k-1])
-    return result
+    res = []
+    length = len(commands)
+    for i in range(length):
+        x, y, z = commands[i]
+        tmp = sorted(array[x-1:y])[z-1]
+        res.append(tmp)
+    return res

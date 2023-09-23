@@ -1,0 +1,37 @@
+# https://school.programmers.co.kr/learn/courses/30/lessons/176962?language=python3
+def solution(plans):
+    res = []
+    for i in range(len(plans)):
+        h, m = map(int, plans[i][1].split(':'))
+        st = h * 60 + m
+        plans[i][1] = st
+        plans[i][2] = int(plans[i][2])
+        
+    plans.sort(key = lambda x : x[1])
+    stack = []
+    for i in range(len(plans)):
+        if i == len(plans) - 1:
+            stack.append(plans[i])
+            break
+            
+        now_s, now_t, now_r = plans[i]
+        next_s, next_t, next_r = plans[i+1]
+        if now_t + now_r <= next_t:
+            res.append(now_s)
+            remain = next_t - (now_t + now_r)
+            
+            while remain != 0 and stack:
+                tmp_s, tmp_t, tmp_r = stack.pop()
+                if remain >= tmp_r:
+                    res.append(tmp_s)
+                    remain -= tmp_r
+                else:
+                    stack.append([tmp_s, tmp_t, tmp_r - remain])
+                    remain = 0         
+        else:
+            plans[i][2] = now_r - (next_t - now_t)
+            stack.append(plans[i])
+    while stack:
+        x ,y, z = stack.pop()
+        res.append(x)
+    return res

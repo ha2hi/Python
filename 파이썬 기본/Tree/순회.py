@@ -38,3 +38,27 @@ def dfs(cur_node):
     return
   dfs(cur_node.left)
   dfs(cure_node.right)
+
+# 전위순회
+def preorder(root):
+  if root is None:
+    return
+  print(root.value)
+  preorder(root.left)
+  preorder(root.right)
+
+# 중위순회
+def inoder(root):
+  if root is None:
+    return
+  inoder(root.left)
+  print(root.value)
+  inoder(root.right)
+
+# 후위순회
+def postorder(root):
+  if root is None:
+    return
+  postorder(root.left)
+  postorder(root.right)
+  print(root.value)

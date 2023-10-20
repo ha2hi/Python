@@ -1,0 +1,25 @@
+def Count(mid):
+    cnt = 1
+    tmp = 0
+    for i in range(n):
+        if tmp + a[i] <= mid:
+            tmp += a[i]
+        else:
+            cnt += 1
+            tmp = a[i]
+    return cnt   
+
+n, m = map(int, input().split())
+a = list(map(int, input().split()))
+res = 2147000000
+lt = 0
+rt = sum(a)
+while lt <= rt:
+    mid = (lt + rt) // 2
+    count = Count(mid)
+    if count <= m:
+        res = min(res, mid)
+        rt = mid - 1
+    elif count > m:
+        lt = mid + 1
+print(res)

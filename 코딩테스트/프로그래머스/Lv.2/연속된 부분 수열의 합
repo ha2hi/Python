@@ -1,0 +1,25 @@
+# https://school.programmers.co.kr/learn/courses/30/lessons/178870
+def solution(sequence, k):
+    res = []
+    lt, rt = 0 , -1
+    tmp = 0
+    stop = len(sequence)
+    while True:
+        if tmp < k:
+            rt += 1
+            if rt >= stop:
+                break
+            tmp += sequence[rt]
+        else:
+            tmp -= sequence[lt]
+            lt += 1
+            if lt >= stop:
+                break
+        if tmp == k:
+            res.append([lt,rt])
+    res.sort(key = lambda x : (x[1]-x[0], x[0]))
+    return res[0]
+
+sequence = [1, 1, 1, 2, 3, 4, 5]
+k = 5
+solution(sequence, k)

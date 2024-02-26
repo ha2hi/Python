@@ -1,0 +1,32 @@
+# https://leetcode.com/problems/maximum-depth-of-binary-tree/
+from collections import deque
+
+class TreeNode:
+    def __init__(self, v=0, l=None, r=None):
+        self.value = v
+        self.left = l
+        self.right = r
+
+def maxDepth(root):
+    max_depth = 0
+    if root is None:
+        return max_depth
+    q = deque()
+    q.append((root, 1))
+    
+    while q:
+        cur_node, cur_depth = q.popleft()
+        max_depth = max(cur_depth, max_depth)
+        if cur_node.left:
+            q.append((cur_node.left, cur_depth + 1))
+        if cur_node.right:
+            q.append((cur_node.right, cur_depth + 1))
+    return max_depth
+
+root = TreeNode(v=3)
+root.left = TreeNode(v=9)
+root.right = TreeNode(v=20)
+root.right.left = TreeNode(v=15)
+root.right.right = TreeNode(v=7)
+
+print(maxDepth(root))

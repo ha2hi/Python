@@ -10,3 +10,6 @@
 
 4. 우체국
   - https://www.acmicpc.net/problem/2141
+
+5. 폴리오미노
+  - https://www.acmicpc.net/problem/1343

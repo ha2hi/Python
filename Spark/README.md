@@ -79,3 +79,31 @@ paris.partitionBy(2, lambda x : x%2).glom().collect()
 - Repartition vs Coalesce
 - Repartition : 파티션의 크기를 줄이거나 늘리는데 사용됨
 - Coalesce : 파티션을 줄이는데 사용됨
+  
+### Catalyst & Tungsten
+스파크는 쿼리를 돌리기 위해 Catalyst와 Tungsten엔진을 사용한다.
+SQL, DataFrame -> Query Plan Optimization(Catalyst) -> RDD(Tungsten)
+
+1. Catalyst: Logical Plan -> Physical Plan으로 변환 역할을한다.
+- Logical Plan
+  - 모든 Transformation 단계에 대한 추상황
+  - 데이터를 어떻게 변환할지는 정의하지만 실제 어디서 동작하는지는 정의하지 않음
+- Physical Plan
+  - Logical Plan이 어떻게 클러스터 위에서 실행될지 정으
+- Catalyst 실행 순서
+  - 1.분석 : DataFrame 객체의 Relation 계산, 컬럼의 타입과 이름 확인
+  - 2.Logical Plan 최적화
+    - 상수로 표현된 표현식을 Compile time에 계산
+    - Predicate Pushdown : Join & Filter -> Filter & Join
+    - Project Pruning : 연산에 필요한 컬럼만 가져오기
+  - 3.Physical Plan 생성
+    - 스파크에서 실행 가능한 Plan으로 변환
+  - 4.코드 제너레이션
+    - 최적화된 physical Plan을 Java Bytecode로 변환
+
+2. Tungsten
+- Physical Plan을 분산 환경에서 실행할 ByteCode를 만든다.(Code Generation)
+- 스파크 엔진의 성능 향상 목적
+  - 메모리 관리 최적화
+  - 캐시 활용 연산
+  - 코드 생성

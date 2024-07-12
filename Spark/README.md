@@ -107,3 +107,12 @@ SQL, DataFrame -> Query Plan Optimization(Catalyst) -> RDD(Tungsten)
   - 메모리 관리 최적화
   - 캐시 활용 연산
   - 코드 생성
+  
+### Spark Streaming
+- SQL 엔진 위에 만들어진 분산 스트림 처리 프로세싱
+- 데이터 스트림(무한한 데이터)을 처리할 때 사용
+- 시간대 별로 데이터를 합쳐(aggregate) 분석할 수 있음
+- Kafka, AWS Kinesis, HDFS 등과 연결 가능
+- 체크포인트를 만들어서 부분적인 결함이 발생해도 다시 돌아가서 데이터를 처리할 수 있음
+- 무한한 데이터를 쪼개서 처리한다.
+- 이전 데이터에 대한 정보를 State로 주고받을 수 있음

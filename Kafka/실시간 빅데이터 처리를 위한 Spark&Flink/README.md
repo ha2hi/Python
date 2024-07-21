@@ -32,4 +32,3 @@ Customer가 데이터를 받아가도 데이터는 저장된다.
 
 ### Kafka Zookeper
 Consumer와 통신, 메타데이터 정보 저장, 카프카 상태관리
-

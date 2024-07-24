@@ -8,4 +8,7 @@
 - 스트림 데이터 처리를 위한 프레임워크
 - 분산처리/고성능/고가용성
 - 배치 프로세싱 또한 지원
-  
+- in-memory 방식
+
+### Flink 프로그래밍 모델
+- Source -> Operation&Transformation -> Sink

@@ -13,7 +13,7 @@ lines_df = spark.readStream.format("socket")\
 
 words_df = lines_df.select(expr("explode(split(value, ' ')) as word"))
 counts_df = words_df.groupBy("word").count()
-
+ㅕ7777777777777777
 word_count_query = counts_df.writeStream.format("console")\
                                         .outputMode("complete")\
                                         .option("checkpointLocation", ".checkpoint")\

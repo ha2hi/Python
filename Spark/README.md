@@ -116,3 +116,6 @@ SQL, DataFrame -> Query Plan Optimization(Catalyst) -> RDD(Tungsten)
 - 체크포인트를 만들어서 부분적인 결함이 발생해도 다시 돌아가서 데이터를 처리할 수 있음
 - 무한한 데이터를 쪼개서 처리한다.
 - 이전 데이터에 대한 정보를 State로 주고받을 수 있음
+
+### 참고하면 좋은 블로그
+https://1ambda.gitbook.io/practical-data-pipeline/02-processing/2.2-batch/2.1.1-spark-intro

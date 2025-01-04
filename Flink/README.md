@@ -8,7 +8,11 @@
 - 스트림 데이터 처리를 위한 프레임워크
 - 분산처리/고성능/고가용성
 - 배치 프로세싱 또한 지원
+  - 배치 프로세싱도 지원하지만 스트리밍에 최적화된 프레임워크
 - in-memory 방식
+  - 메모리 위에서 작업을 처리하기 때문에 빠르다.
+- Lazy Execution
+  - Spark와 동일하 Action시 모든 작업을 처리한다.
 
 ### Flink 프로그래밍 모델
 - Source -> Operation&Transformation -> Sink

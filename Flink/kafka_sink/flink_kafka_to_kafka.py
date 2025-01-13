@@ -1,9 +1,8 @@
 import os
 from pyflink.common.serialization import SimpleStringSchema
 from pyflink.datastream import StreamExecutionEnvironment
-from pyflink.datastream.connectors import FlinkKafkaConsumer
+from pyflink.datastream.connectors import FlinkKafkaConsumer, FlinkKafkaProducer
 from pyflink.datastream.execution_mode import RuntimeExecutionMode 
-from pyflink.table import StreamTableEnvironment
 
 env = StreamExecutionEnvironment.get_execution_environment()
 env.set_runtime_mode(execution_mode = RuntimeExecutionMode.STREAMING)
@@ -21,24 +20,23 @@ t_env.get_config().get_configuration().set_string(
   "pipeline.jars", f"file://{kafka_jar_path}"
 )
 
-schema = SimpleStringSchema()
+in_schema = SimpleStringSchema()
 kafka_consumer = FlinkKafkaConsumer(
-  topics="flink-test",
-  deserialization_schema=schema,
+  topics="example-source",
+  deserialization_schema=in_schema,
   properties={
     'bootstrap.servers': 'localhost:9092',
     'group.id': 'test_group'
   })
 
-ds = env.add_source(kafka_consumer)
-t_env.execute_sql("""
-  CREATE TABLE blackhole (
-    data STRING
-  ) WITH (
-    'connector' = 'blackhole'
-  )
-""")
+out_schema = SimpleStringSchema()
+kafka_producer = FlinkKafkaProducer(
+  topics="example-destination",
+  deserialization_schema=out_schema,
+  properties={
+    'bootstrap.servers': 'localhost:9092',
+    'group.id': 'test_group'
+  })
 
-table = t_env.from_data_stream(ds)
-table.insert_into("blackhole")
-t_env.execute("flink_kafka_consumer")
+ds = t_env.add_source(kafka_consumer)
+ds.add_sink(kafka_producer)

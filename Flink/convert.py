@@ -14,3 +14,4 @@ res_table = t_env.sql_query("SELECT * FROM lang WHERE f0 like 'p%'")
 res_ds = t_env.to_data_stream(res_table)
 
 res_ds.print()
+env.execute()

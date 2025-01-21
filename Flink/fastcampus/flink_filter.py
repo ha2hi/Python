@@ -1,6 +1,7 @@
 from pyflink.table import (
   EnvironmentSettings, TableEnvironment
 )
+from pyflink.table.expressions import col
 
 t_env = TableEnvironment.create(
   EnvironmentSettings.in_streaming_mode())
@@ -38,10 +39,33 @@ source_ddl = f"""
 t_env.execute_sql(source_ddl)
 tbl = t_env.from_path("sample_trips")
 
-# 기본적인 select
-print("===========BASIC SELECT============")
 r1 = tbl.select(
-    tbl.PULocationID.alias("pickup_location_id"),
-    tbl.total_amount
-)
+  tbl.total_amount
+).where(col('total_amount') >= 10)
 print(r1.to_pandas())
+
+r1_query = t_env.sql_query("""
+SELECT
+  total_amount
+FROM
+  sample_trips
+WHERE
+  total_amount >= 10
+""")
+print(r1_query.to_pandas())
+
+r2 = tbl.select(
+  (tbl.total_amount / tbl.passenger_count).alias('ppp')
+).where(col('ppp') >= 10)
+print(r2.to_pandas())
+
+r2_sql = t_env.sql_query("""
+SELECT * FROM(
+  SELECT
+    total_amount / passenger_count as ppp
+  FROM
+    sample_trips)
+  WHERE
+    ppp >= 10
+""")
+print(r2_sql.to_pandas())

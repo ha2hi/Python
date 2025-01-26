@@ -11,8 +11,13 @@ kafka_jar_path = os.path.join(
   os.path.abspath(os.path.dirname(__file__)), "../",
   "flink-sql-connector-kafka-3.3.0-1.20.jar"
 )
+avro_jar_path = os.path.join(
+  os.path.abspath(os.path.dirname(__file__)), "../",
+  "flink-sql-avro-1.14.4.jar"
+)
 
 t_env.get_config().set("pipeline.jars", "file:///root/flink-sql-connector-kafka-3.3.0-1.20.jar")
+t_env.get_config().set("pipeline.jars", "file:///root/flink-sql-avro-1.14.4.jar")
 
 source_query = """
     CREATE TABLE transaction (
@@ -20,9 +25,9 @@ source_query = """
         TRANSACTION_TYPE STRING,
         AMOUNT BIGINT,
         DATE_MS BIGINT,
-        CURRENCY STRING
+        CURRENCY STRING,
         TS AS TO_TIMESTAMP_LTZ(DATE_MS, 3),
-        WATERMARK FOR TS - INTERVAL '5' SECOND
+        WATERMARK FOR TS AS TS - INTERVAL '5' SECOND
     ) WITH(
       'connector' = 'kafka',
       'topic' = 'transaction',
@@ -32,3 +37,29 @@ source_query = """
       'scan.startup.mode' = 'latest-offset'
       )
 """
+
+sink_query = """
+  CREATE TABLE sink(
+        ID STRING,
+        TRANSACTION_TYPE STRING,
+        AMOUNT BIGINT,
+        DATE_MS BIGINT,
+        CURRENCY STRING,
+        TS TIMESTAMP_LTZ
+  ) WITH(
+    'connector' = 'print'
+  )
+"""
+
+
+t_env.execute_sql(source_query)
+t_env.execute_sql(sink_query)
+
+# t_env.from_path("transaction").insert_into("sink").wait()
+data = t_env.sql_query("""
+SELECT
+  *
+FROM
+  transaction
+""")
+print(data.to_pandas())
